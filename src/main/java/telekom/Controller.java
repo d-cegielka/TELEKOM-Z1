@@ -23,16 +23,16 @@ public class Controller {
         fileChooser.setTitle("Wczytaj dane");
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Pliki tekstowe (*.txt)", "*.txt");
         fileChooser.getExtensionFilters().add(extFilter);
-        String path = "C:\\TELEKOM-Z1\\data.txt";
-        inputFile = new File(path);
-        //inputFile = fileChooser.showOpenDialog(new Stage());
-        reportArea.setText(Files.readString(Paths.get(path)));
+        /*String path = "C:\\TELEKOM-Z1\\data.txt";
+        inputFile = new File(path);*/
+        inputFile = fileChooser.showOpenDialog(new Stage());
+        reportArea.setText(Files.readString(Paths.get(inputFile.getPath())));
     }
 
     @FXML
     public void encodeData(){
         try {
-            MistakeDetector encoder = new MistakeDetector(inputFile);
+            MistakeDetector encoder = new MistakeDetector();
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Zapisz dane");
 
@@ -40,11 +40,12 @@ public class Controller {
             FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Pliki tekstowe (*.txt)", "*.txt");
             fileChooser.getExtensionFilters().add(extFilter);
 
-            String path = "C:\\TELEKOM-Z1\\data_out.txt";
+           // String path = "C:\\TELEKOM-Z1\\data_out.txt";
+            String path1 = "D:\\TELEKOM-Z1\\data_out_encoded.txt";
             //Show save file dialog
             //File encodedFile = fileChooser.showSaveDialog(new Stage());
-            File encodedFile = new File(path);
-            reportArea.setText(encoder.encodeFile(encodedFile).toString());
+            File encodedFile = new File(path1);
+            reportArea.setText(encoder.encodeFile(inputFile,encodedFile).toString());
         } catch (IOException e) {
             alertHandling(e.getMessage());
         }
@@ -61,12 +62,26 @@ public class Controller {
     }
 
 
-
-
-
-
+    @FXML
     public void decodeData() {
+        try {
+            MistakeDetector decoder = new MistakeDetector();
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Zapisz dane");
 
+            //Set extension filter for text files
+            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Pliki tekstowe (*.txt)", "*.txt");
+            fileChooser.getExtensionFilters().add(extFilter);
+
+            // String path = "C:\\TELEKOM-Z1\\data_out.txt";
+            String path1 = "D:\\TELEKOM-Z1\\data_out_decoded.txt";
+            //Show save file dialog
+            //File encodedFile = fileChooser.showSaveDialog(new Stage());
+            File decodedFile = new File(path1);
+            reportArea.setText(decoder.decodeFile(inputFile,decodedFile).toString());
+        } catch (IOException e) {
+            alertHandling(e.getMessage());
+        }
     }
 
     @FXML

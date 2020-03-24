@@ -20,7 +20,7 @@
             <TextArea fx:id="reportArea" layoutX="288.0" layoutY="31.0" prefHeight="281.0" prefWidth="325.0" wrapText="true" />
             <Label layoutX="288.0" layoutY="6.0" prefHeight="17.0" prefWidth="76.0" text="Dane:" />
             <Button fx:id="encodeButton" layoutX="47.0" layoutY="80.0" mnemonicParsing="false" onAction="#encodeData" prefHeight="25.0" prefWidth="152.0" text="Koduj dane" />
-            <Button fx:id="decodeButton" layoutX="47.0" layoutY="116.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="152.0" text="Dekoduj dane" />
+            <Button fx:id="decodeButton" layoutX="47.0" layoutY="116.0" mnemonicParsing="false" onAction="#decodeData" prefHeight="25.0" prefWidth="152.0" text="Dekoduj dane" />
             <Button fx:id="fileOpenButton" layoutX="47.0" layoutY="31.0" mnemonicParsing="false" onAction="#openFile" prefHeight="25.0" prefWidth="152.0" text="Wczytaj plik" />
          </children>
       </AnchorPane>
