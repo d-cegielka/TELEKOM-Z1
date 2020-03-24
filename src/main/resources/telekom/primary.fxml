@@ -1,16 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Button?>
-<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="telekom.Controller">
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="telekom.Controller">
    <children>
-      <Label text="Primary View" />
-      <Button fx:id="primaryButton" text="Switch to Secondary View"/>
+      <MenuBar VBox.vgrow="NEVER">
+         <menus>
+            <Menu mnemonicParsing="false" text="Plik">
+               <items>
+                  <MenuItem fx:id="fileOpenMenuButton" mnemonicParsing="false" onAction="#openFile" text="Wczytaj plik" />
+                  <MenuItem fx:id="quitButton" mnemonicParsing="false" onAction="#quitApp" text="Zamknij" />
+               </items>
+            </Menu>
+         </menus>
+      </MenuBar>
+      <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+         <children>
+            <TextArea fx:id="reportArea" layoutX="288.0" layoutY="31.0" prefHeight="281.0" prefWidth="325.0" wrapText="true" />
+            <Label layoutX="288.0" layoutY="6.0" prefHeight="17.0" prefWidth="76.0" text="Dane:" />
+            <Button fx:id="encodeButton" layoutX="47.0" layoutY="80.0" mnemonicParsing="false" onAction="#encodeData" prefHeight="25.0" prefWidth="152.0" text="Koduj dane" />
+            <Button fx:id="decodeButton" layoutX="47.0" layoutY="116.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="152.0" text="Dekoduj dane" />
+            <Button fx:id="fileOpenButton" layoutX="47.0" layoutY="31.0" mnemonicParsing="false" onAction="#openFile" prefHeight="25.0" prefWidth="152.0" text="Wczytaj plik" />
+         </children>
+      </AnchorPane>
    </children>
-   <padding>
-      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-   </padding>
 </VBox>
