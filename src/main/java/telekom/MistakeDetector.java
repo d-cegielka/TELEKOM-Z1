@@ -11,15 +11,23 @@ import java.util.List;
 
 public class MistakeDetector {
     private List<Byte> receivedMessage;
-    private int[][] matrixH = {
-            {1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0},
-            {1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
-            {1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0},
-            {0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0},
-            {1, 1, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0},
-            {1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0},
-            {0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0},
-            {1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1}};
+    private boolean[][] matrixH = {
+            {true, true, true, true, false, false, false, false, true, false, false, false, false, false, false, false},
+            {true, true, false, false, true, true, false, false, false, true, false, false, false, false, false, false},
+            {true, false, true, false, true, false, true, false, false, false, true, false, false, false, false, false},
+            {false, true, false, true, false, true, true, false, false, false, false, true, false, false, false, false},
+            {true, true, true, false, true, false, false, true, false, false, false, false, true, false, false, false},
+            {true, false, false, true, false, true, false, true, false, false, false, false, false, true, false, false},
+            {false, true, true, true, true, false, true, true, false, false, false, false, false, false, true, false},
+            {true, true, true, false, false, true, true, true, false, false, false, false, false, false, false, true}};
+  /*{1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0},
+    {1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
+    {1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+    {0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0},
+    {1, 1, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0},
+    {1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0},
+    {0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0},
+    {1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1}*/
 
     public MistakeDetector() { }
 
@@ -29,33 +37,41 @@ public class MistakeDetector {
     }
 
     public StringBuilder encodeFile(File outputFile) throws IOException {
-        StringBuilder result = new StringBuilder();
-        ByteArrayOutputStream os = new ByteArrayOutputStream();
-        int[] check= new int[8];
+        StringBuilder resultString = new StringBuilder();
+        ByteArrayOutputStream encodedBytes = new ByteArrayOutputStream();
         for(Byte obj: receivedMessage) {
-            BitSet bits = BitSet.valueOf(new byte[]{obj});
-            for (int i = 0; i < 8; i++) {
-                check[i] = 0;
-                for (int j = 0; j < 8; j++) {
-                    if(bits.get(7 - j))
-                        check[i] += matrixH[i][j];
-                }
-                check[i] %= 2;
-                if(bits.get(7 - i))
-                    os.write(49);
-                else
-                    os.write(48);
-            }
-            for (int value : check) os.write((value + 48));
-            os.write(System.lineSeparator().getBytes());
+            encodedBytes.write(encodeByte(obj));
+            encodedBytes.write(System.lineSeparator().getBytes()); //Znak nowej lini w buforze
         }
-        result.append(os.toString());
+        resultString.append(encodedBytes.toString());
         OutputStream fileOutput = new FileOutputStream(outputFile);
-        fileOutput.write(os.toByteArray());
-        os.flush();
+        fileOutput.write(encodedBytes.toByteArray());
         fileOutput.flush();
-        os.close();
         fileOutput.close();
-        return result;
+        return resultString;
+    }
+
+    private byte[] encodeByte(Byte object) throws IOException {
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        boolean[] check= new boolean[8];
+        BitSet bits = BitSet.valueOf(new byte[]{object}); //Konwersja bajtu na 8 bitów
+        for (int i = 0; i < 8; i++) {
+            check[i] = false;
+            for (int j = 0; j < 8; j++) {
+                if(bits.get(7 - j))
+                    check[i]  ^= matrixH[i][j]; // Ustalanie kolejnych bitów parzystości poprzez operacje logiczną XOR na bitach
+            }
+            if(bits.get(7 - i)) //Zapis bitu znaku do bufora
+                os.write(49);
+            else
+                os.write(48);
+        }
+
+        for (boolean value : check) { //Zapis bitów parzystości do bufora
+            if(value) os.write(49);
+            else os.write(48);
+        }
+
+        return os.toByteArray();
     }
 }
