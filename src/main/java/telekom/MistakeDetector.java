@@ -117,7 +117,7 @@ public class MistakeDetector {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < lineOfArray.length; j++) {
                 if(lineOfArray[j])
-                    invalidBits[i] ^= matrixH[i][j]; //Operacja XOR na wartościach macierzy.
+                    invalidBits[i] ^= matrixH[i][j]; // Tworzenie tablicy błędów poprzez operację logiczną XOR na bitach.
             }
 
             if(invalidBits[i])
