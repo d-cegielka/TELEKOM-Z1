@@ -2,27 +2,50 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="telekom.Controller">
-   <children>
-      <MenuBar VBox.vgrow="NEVER">
-         <menus>
-            <Menu mnemonicParsing="false" text="Plik">
-               <items>
-                  <MenuItem fx:id="fileOpenMenuButton" mnemonicParsing="false" onAction="#openFile" text="Wczytaj plik" />
-                  <MenuItem fx:id="quitButton" mnemonicParsing="false" onAction="#quitApp" text="Zamknij" />
-               </items>
-            </Menu>
-         </menus>
-      </MenuBar>
-      <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
-         <children>
-            <TextArea fx:id="reportArea" layoutX="288.0" layoutY="31.0" prefHeight="281.0" prefWidth="325.0" wrapText="true" />
-            <Label layoutX="288.0" layoutY="6.0" prefHeight="17.0" prefWidth="76.0" text="Dane:" />
-            <Button fx:id="encodeButton" layoutX="47.0" layoutY="80.0" mnemonicParsing="false" onAction="#encodeData" prefHeight="25.0" prefWidth="152.0" text="Koduj dane" />
-            <Button fx:id="decodeButton" layoutX="47.0" layoutY="116.0" mnemonicParsing="false" onAction="#decodeData" prefHeight="25.0" prefWidth="152.0" text="Dekoduj dane" />
-            <Button fx:id="fileOpenButton" layoutX="47.0" layoutY="31.0" mnemonicParsing="false" onAction="#openFile" prefHeight="25.0" prefWidth="152.0" text="Wczytaj plik" />
-         </children>
-      </AnchorPane>
-   </children>
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/10.0.2-internal"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="telekom.Controller">
+   <MenuBar VBox.vgrow="NEVER">
+      <Menu mnemonicParsing="false" text="Plik">
+         <MenuItem mnemonicParsing="false" onAction="#quitApp" text="Zamknij"/>
+      </Menu>
+   </MenuBar>
+   <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+      <children>
+         <TextArea fx:id="reportArea" layoutX="277.0" layoutY="31.0" prefHeight="322.0" prefWidth="336.0"
+                   wrapText="true"/>
+         <Label layoutX="277.0" layoutY="6.0" prefHeight="17.0" prefWidth="130.0" text="Dane tekstowe:"/>
+         <AnchorPane layoutX="38.0" layoutY="14.0" prefHeight="157.0" prefWidth="200.0">
+            <children>
+               <Separator layoutY="39.0" prefWidth="200.0"/>
+               <Label alignment="CENTER" layoutX="24.0" layoutY="5.0" prefHeight="27.0" prefWidth="152.0"
+                      text="Szyfrowanie tekstu" textAlignment="CENTER">
+                  <font>
+                     <Font size="14.0"/>
+                  </font>
+               </Label>
+               <Button layoutX="24.0" layoutY="66.0" mnemonicParsing="false" onAction="#encodeText" prefHeight="25.0"
+                       prefWidth="152.0" text="Koduj tekst"/>
+               <Button layoutX="24.0" layoutY="108.0" mnemonicParsing="false" onAction="#decodeText" prefHeight="25.0"
+                       prefWidth="152.0" text="Dekoduj tekst"/>
+            </children>
+         </AnchorPane>
+         <AnchorPane layoutX="38.0" layoutY="187.0" prefHeight="167.0" prefWidth="200.0">
+            <children>
+               <Label alignment="CENTER" layoutX="24.0" layoutY="7.0" prefHeight="27.0" prefWidth="152.0"
+                      text="Szyfrowanie plików" textAlignment="CENTER">
+                  <font>
+                     <Font size="14.0"/>
+                  </font>
+               </Label>
+               <Separator layoutY="41.0" prefWidth="200.0"/>
+               <Button layoutX="24.0" layoutY="63.0" mnemonicParsing="false" onAction="#encodeFile" prefHeight="25.0"
+                       prefWidth="152.0" text="Koduj plik"/>
+               <Button layoutX="24.0" layoutY="108.0" mnemonicParsing="false" onAction="#decodeFile" prefHeight="25.0"
+                       prefWidth="152.0" text="Dekoduj plik"/>
+            </children>
+         </AnchorPane>
+      </children>
+   </AnchorPane>
 </VBox>
