@@ -158,8 +158,8 @@ public class MistakeDetector {
             }
         }
         BitSet decodedBits = new BitSet(8);
-        for(int i =0; i<8;i++)
-            decodedBits.set(7-i,lineOfArray[i]);
+        for (int i = 0; i < 8; i++)
+            decodedBits.set(7 - i, lineOfArray[i]);
 
         return decodedBits.toByteArray();
     }
